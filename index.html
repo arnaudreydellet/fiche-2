@@ -5,124 +5,611 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiche remédiation · 2 — Reconnaître deux fractions égales</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=OpenDyslexic:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Sora:wght@400;500;600;700;800&family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=OpenDyslexic:wght@400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     :root {
-      --vert-fort:#108c5a; --vert-bord:#0a6e3f; --vert-pale:#edf7f2;
-      --vert-clair:#c8edd9; --vert-moyen:#a8dfc4; --vert-doux:#d4f0e2;
-      --texte-fonce:#0d2b1f; --texte-vert:#108c5a;
-      --badge-bg:rgba(10,110,63,0.13); --badge-texte:#0a6e3f;
+      /* ── Palette écosystème ── */
+      --navy: #1A2C4F;
+      --navy-deep: #142340;
+      --gold: #C28A42;
+      --gold-l: #D4A464;
+      --gold-deep: #B47A35;
+      --gold-dark: #8F5F26;
+      --gold-pale: rgba(212,164,100,.10);
+      --gold-soft: rgba(212,164,100,.18);
+      --gold-bg: rgba(212,164,100,.06);
+      --beige: #F4F2EE;
+      --beige-l: #FAF8F4;
+      --beige-d: #ECE9E2;
+      --cream: #FDF9F0;
+      --cream-l: #FEFCF5;
+      --white: #FFFFFF;
+      --green: #15A362;
+      --green-dark: #0E7348;
+      --green-l: #E8F5EE;
+      --red: #D42626;
+      --red-dark: #A11717;
+      --red-l: #FEF2F2;
+      --text: #1A1311;
+      --text2: #4A4036;
+      --text3: #8A7F73;
+      --border: rgba(20,19,16,.10);
+      --border-soft: rgba(20,19,16,.06);
+
+      --r: 12px;
+      --rl: 16px;
+      --rxl: 22px;
     }
-    body.dys { font-family:'OpenDyslexic',Arial,sans-serif !important; }
+
+    /* ══ MODE DYS ══════════════════════════════════════════════ */
+    body.dys { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
     body.dys .titre, body.dys .texte-intro, body.dys .consigne,
     body.dys .remed-consigne, body.dys .regle-texte, body.dys .choix-btn,
     body.dys .btn, body.dys .btn-compris, body.dys .fn,
     body.dys .feedback, body.dys .remed-feedback {
-      font-family:'OpenDyslexic',Arial,sans-serif !important; line-height:1.9 !important;
+      font-family: 'OpenDyslexic', Arial, sans-serif !important;
+      line-height: 1.9 !important;
     }
-    body.dys .consigne      { font-size:22px !important; }
-    body.dys .remed-consigne{ font-size:21px !important; }
-    body.dys .texte-intro   { font-size:20px !important; }
-    body.dys .regle-texte   { font-size:17px !important; }
-    body.dys .choix-btn     { font-size:20px !important; padding:18px 34px !important; min-width:140px !important; }
-    body.dys .choix-wrap    { gap:16px !important; }
-    body.dys .carte, body.dys .quiz-carte, body.dys .remed-carte { background:rgba(255,253,240,0.82) !important; }
+    body.dys .consigne      { font-size: 22px !important; }
+    body.dys .remed-consigne{ font-size: 21px !important; }
+    body.dys .texte-intro   { font-size: 20px !important; }
+    body.dys .regle-texte   { font-size: 17px !important; }
+    body.dys .choix-btn     { font-size: 20px !important; padding: 18px 34px !important; min-width: 140px !important; }
+    body.dys .choix-wrap    { gap: 16px !important; }
+    body.dys .carte, body.dys .quiz-carte, body.dys .cours-carte { background: rgba(255,253,240,0.82) !important; }
 
-    @keyframes gradientWave { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes btnGlow { 0%{box-shadow:0 0 0px 0px rgba(10,110,63,0)} 50%{box-shadow:0 0 0px 10px rgba(10,110,63,0.15),0 0 0px 22px rgba(10,110,63,0.07)} 100%{box-shadow:0 0 0px 0px rgba(10,110,63,0)} }
-    @keyframes regleFadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    /* ══ ANIMATIONS ════════════════════════════════════════════ */
+    @keyframes gradientWave {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes btnGlow {
+      0%   { box-shadow: 0 0 0 0 rgba(194,138,66,0); }
+      50%  { box-shadow: 0 6px 20px rgba(194,138,66,.30), 0 0 0 0 rgba(194,138,66,.10); }
+      100% { box-shadow: 0 0 0 0 rgba(194,138,66,0); }
+    }
+    @keyframes regleFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-    html,body { height:100%; }
-    body { min-height:100vh; display:flex; align-items:center; justify-content:center; font-family:Arial,sans-serif; }
+    /* ══ BASE ══════════════════════════════════════════════════ */
+    html, body { height: 100%; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter Tight', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--beige);
+    }
 
-    .header { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px 28px;background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.7);animation:fadeUp 0.6s cubic-bezier(.22,1,.36,1) both; }
-    .header-ligne { font-size:18px;font-weight:500;color:var(--texte-fonce);display:flex;align-items:center;gap:10px; }
-    .header-sep { color:var(--vert-fort);font-weight:700; }
-    .header-nom { font-weight:700;color:var(--vert-bord); }
-    /* Badge "Mode DYS actif" qui remplace l'ancien bouton toggle */
-    .header-dys-badge { display:none; position:absolute;right:20px;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:rgba(10,110,63,0.12);border:1px solid rgba(10,110,63,0.25);font-family:Arial,sans-serif;font-size:11px;font-weight:700;color:var(--vert-bord);letter-spacing:0.04em; }
-    .header-dys-badge.visible { display:inline-flex; }
-    .header-dys-badge::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--vert-fort); }
+    /* ══ HEADER ════════════════════════════════════════════════ */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 28px;
+      background: rgba(244,242,238,.75);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.6s cubic-bezier(.22,1,.36,1) both;
+    }
+    .header-ligne {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text2);
+      display: flex; align-items: center; gap: 10px;
+      letter-spacing: -.05px;
+    }
+    .header-sep { color: var(--gold-deep); font-weight: 700; }
+    .header-nom {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -.2px;
+    }
 
-    .ecran { display:flex;align-items:center;justify-content:center;width:100%;min-height:100vh;padding-top:70px; }
-    .ecran.cache { display:none; }
-    .fond-vert  { background:linear-gradient(135deg,var(--vert-clair),var(--vert-pale),var(--vert-moyen),var(--vert-pale),var(--vert-doux));background-size:400% 400%;animation:gradientWave 8s ease infinite; }
-    .fond-chaud { background:linear-gradient(135deg,#fdf6ec,#fef9f0,#fcebd8,#fef5e7,#fdf0e0);background-size:400% 400%;animation:gradientWave 8s ease infinite; }
+    .header-dys-badge {
+      display: none;
+      position: absolute; right: 20px;
+      align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 999px;
+      background: var(--gold-pale);
+      border: 1px solid var(--gold-soft);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 10.5px; font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: 0.04em;
+    }
+    .header-dys-badge.visible { display: inline-flex; }
+    .header-dys-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
 
-    .carte { background:rgba(255,255,255,0.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.85);border-radius:28px;padding:56px 64px 52px;display:flex;flex-direction:column;align-items:center;gap:14px;max-width:480px;width:90%; }
-    .carte.anime { animation:fadeUp 0.8s cubic-bezier(.22,1,.36,1) both; }
-    .badge { font-size:11px;font-weight:700;color:var(--badge-texte);background:var(--badge-bg);padding:5px 18px;border-radius:999px;letter-spacing:0.07em;text-transform:uppercase; }
-    .titre { font-size:clamp(26px,5vw,34px);font-weight:500;color:var(--texte-fonce);text-align:center;line-height:1.25; }
-    .titre .accent { color:var(--texte-vert); }
-    .texte-intro { font-size:18px;font-weight:400;color:var(--texte-fonce);text-align:center;line-height:1.6;max-width:340px; }
-    .texte-intro strong { color:var(--vert-bord);font-weight:700; }
+    /* ══ ÉCRANS ════════════════════════════════════════════════ */
+    .ecran { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding-top: 70px; }
+    .ecran.cache { display: none; }
 
-    .btn { margin-top:22px;padding:15px 54px;border-radius:999px;border:2.5px solid var(--vert-bord);background:transparent;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:0.04em;color:var(--vert-bord);animation:btnGlow 2.2s ease-in-out infinite;transition:background 0.2s,color 0.2s,transform 0.15s;font-family:inherit; }
-    .btn:hover { background:var(--vert-bord);color:#fff;transform:scale(1.05); }
-    .btn:active { transform:scale(0.97); }
+    .fond-vert {
+      background: linear-gradient(135deg, #F4F2EE, #FAF8F4, #F0EDE6, #F7F4ED, #F4F2EE);
+      background-size: 400% 400%;
+      animation: gradientWave 28s ease infinite;
+    }
+    .fond-chaud {
+      background: linear-gradient(135deg, #FDF9F0, #FEFCF5, #FAF1E0, #FDF6EC, #FBF4E4);
+      background-size: 400% 400%;
+      animation: gradientWave 28s ease infinite;
+    }
 
-    /* ── COURS ── */
-    .cours-carte { background:rgba(255,255,255,0.70);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.9);border-radius:28px;padding:40px 52px 48px;display:flex;flex-direction:column;align-items:center;gap:0;max-width:620px;width:92%; }
+    /* ══ CARTES ════════════════════════════════════════════════ */
+    .carte {
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: var(--rxl);
+      padding: 56px 64px 52px;
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 500px; width: 90%;
+      box-shadow: 0 8px 32px rgba(20,19,16,.05);
+    }
+    .carte.anime { animation: fadeUp 0.8s cubic-bezier(.22,1,.36,1) both; }
 
-    .cours-prog-wrap { width:100%;margin-bottom:24px; }
-    .cours-prog-header { display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:10px; }
-    .cours-prog-badge { font-size:13px;font-weight:700;background:rgba(212,130,10,0.15);color:#b06a20;padding:5px 18px;border-radius:999px;letter-spacing:0.04em; }
-    .cours-prog-num { font-size:11px;font-weight:600;color:#c8913a;letter-spacing:0.05em;text-transform:uppercase; }
-    .cours-prog-track { width:100%;height:6px;background:rgba(180,100,20,0.12);border-radius:999px;overflow:hidden; }
-    .cours-prog-fill  { height:100%;background:#d4820a;border-radius:999px;transition:width 0.6s cubic-bezier(.22,1,.36,1);width:0%; }
+    /* ══ BADGES ════════════════════════════════════════════════ */
+    .badge {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--gold-deep);
+      background: var(--gold-pale);
+      padding: 6px 18px;
+      border-radius: 999px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold-soft);
+    }
+
+    /* ══ TITRES ════════════════════════════════════════════════ */
+    .titre {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(24px,4.5vw,32px);
+      font-weight: 700;
+      color: var(--navy);
+      text-align: center;
+      line-height: 1.2;
+      letter-spacing: -.6px;
+    }
+    .titre .accent {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--gold-deep);
+      letter-spacing: -.2px;
+    }
+
+    /* ══ TEXTE D'INTRO ═════════════════════════════════════════ */
+    .texte-intro {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14.5px;
+      font-weight: 400;
+      color: var(--text2);
+      text-align: center;
+      line-height: 1.65;
+      max-width: 380px;
+      letter-spacing: -.05px;
+    }
+    .texte-intro strong {
+      color: var(--navy);
+      font-weight: 700;
+    }
+
+    /* ══ BOUTON PRINCIPAL ══════════════════════════════════════ */
+    .btn {
+      margin-top: 22px;
+      padding: 14px 36px;
+      border-radius: var(--r);
+      border: none;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-deep));
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: -.05px;
+      color: #fff;
+      animation: btnGlow 2.2s ease-in-out infinite;
+      transition: transform .15s, box-shadow .2s;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(194,138,66,.35);
+    }
+    .btn:active { transform: translateY(0); }
+
+    /* ══ COURS ═════════════════════════════════════════════════ */
+    .cours-carte {
+      background: rgba(255,255,255,.70);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: var(--rxl);
+      padding: 40px 52px 48px;
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 0;
+      max-width: 640px; width: 92%;
+      box-shadow: 0 8px 32px rgba(20,19,16,.06);
+    }
+
+    .cours-prog-wrap { width: 100%; margin-bottom: 24px; }
+    .cours-prog-header {
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .cours-prog-badge {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--gold-pale);
+      color: var(--gold-deep);
+      padding: 5px 16px;
+      border-radius: 999px;
+      letter-spacing: .04em;
+      border: 1px solid var(--gold-soft);
+    }
+    .cours-prog-num {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text3);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .cours-prog-track {
+      width: 100%; height: 6px;
+      background: rgba(20,19,16,.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .cours-prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-l), var(--gold-deep));
+      border-radius: 999px;
+      transition: width 0.6s cubic-bezier(.22,1,.36,1);
+      width: 0%;
+    }
 
     /* Affichage des deux fractions côte à côte */
-    .fractions-display { display:flex;align-items:center;gap:28px;justify-content:center;margin:20px 0 24px;flex-wrap:wrap; }
-    .frac-grande { display:inline-flex;flex-direction:column;align-items:center;gap:6px; }
-    .frac-grande .fg-num { font-size:52px;font-weight:700;color:#3d2000;line-height:1; }
-    .frac-grande .fg-bar { width:70px;height:4px;background:#3d2000;border-radius:2px; }
-    .frac-grande .fg-den { font-size:52px;font-weight:700;color:#3d2000;line-height:1; }
-    .frac-sep { font-size:28px;font-weight:700;color:#b06a20; }
+    .fractions-display {
+      display: flex; align-items: center;
+      gap: 28px;
+      justify-content: center;
+      margin: 20px 0 24px;
+      flex-wrap: wrap;
+    }
+    .frac-grande {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Sora', sans-serif;
+    }
+    .frac-grande .fg-num {
+      font-size: 50px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: -.5px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: transparent;
+      transition: background 0.5s ease, box-shadow 0.5s ease;
+    }
+    .frac-grande .fg-bar {
+      width: 70px;
+      height: 4px;
+      background: var(--navy);
+      border-radius: 2px;
+    }
+    .frac-grande .fg-den {
+      font-size: 50px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: -.5px;
+      padding: 4px 12px;
+      border-radius: 8px;
+      background: transparent;
+      transition: background 0.5s ease, box-shadow 0.5s ease;
+    }
+    /* Surlignage or pulsant pour mettre en évidence num/dénom selon la question */
+    @keyframes highlightPulse {
+      0%   { background: rgba(212,164,100,.20); box-shadow: 0 0 0 1px rgba(194,138,66,.15); }
+      50%  { background: rgba(212,164,100,.55); box-shadow: 0 0 0 2px rgba(194,138,66,.45), 0 0 14px rgba(194,138,66,.30); }
+      100% { background: rgba(212,164,100,.20); box-shadow: 0 0 0 1px rgba(194,138,66,.15); }
+    }
+    .frac-grande .fg-num.highlight,
+    .frac-grande .fg-den.highlight {
+      animation: highlightPulse 1.4s ease-in-out infinite;
+    }
+    .frac-sep {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--gold-deep);
+      letter-spacing: -.2px;
+    }
 
     /* Règle */
-    .regle-bloc { width:100%;background:rgba(212,130,10,0.08);border-left:4px solid #d4820a;border-radius:0 12px 12px 0;padding:16px 20px;margin-bottom:24px;animation:regleFadeIn 0.6s cubic-bezier(.22,1,.36,1) both; }
-    .regle-label { font-size:10px;font-weight:700;color:#b06a20;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px; }
-    .regle-texte { font-size:15px;font-weight:500;color:#3d2000;line-height:1.6; }
+    .regle-bloc {
+      width: 100%;
+      background: var(--gold-bg);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      animation: regleFadeIn 0.6s cubic-bezier(.22,1,.36,1) both;
+    }
+    .regle-label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .regle-texte {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: -.05px;
+    }
 
     /* Zone questions guidées */
-    .questions-guidees { width:100%;display:flex;flex-direction:column;gap:16px; }
-    .question-bloc { animation:slideIn 0.4s cubic-bezier(.22,1,.36,1) both; }
-    .q-label { font-size:11px;font-weight:700;color:#b06a20;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px; }
-    .q-texte { font-size:18px;font-weight:500;color:#3d2000;line-height:1.6;margin-bottom:12px; }
-    .q-texte .accent-q { color:#d4820a;font-weight:700; }
+    .questions-guidees {
+      width: 100%;
+      display: flex; flex-direction: column;
+      gap: 16px;
+    }
+    .question-bloc { animation: slideIn 0.4s cubic-bezier(.22,1,.36,1) both; }
+    .q-label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .q-texte {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      letter-spacing: -.15px;
+    }
+    .q-texte .accent-q {
+      color: var(--gold-deep);
+      font-weight: 700;
+    }
 
-    .choix-wrap { display:flex;flex-wrap:wrap;gap:10px;justify-content:center;width:100%; }
-    .choix-btn { padding:13px 26px;border-radius:14px;border:2px solid rgba(180,100,20,0.25);background:rgba(255,255,255,0.65);font-size:17px;font-weight:600;color:#3d2000;cursor:pointer;transition:background 0.18s,border-color 0.18s,transform 0.15s;min-width:100px;text-align:center;font-family:inherit; }
-    .choix-btn:hover { background:rgba(212,130,10,0.12);border-color:#d4820a;transform:scale(1.04); }
+    .choix-wrap {
+      display: flex; flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      width: 100%;
+    }
+    .choix-btn {
+      font-family: 'Inter Tight', sans-serif;
+      padding: 12px 26px;
+      border-radius: var(--r);
+      border: 1.5px solid var(--border);
+      background: rgba(255,255,255,.7);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .18s, border-color .18s, transform .15s, box-shadow .2s;
+      min-width: 100px;
+      text-align: center;
+      letter-spacing: -.05px;
+    }
+    .choix-btn:hover {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(194,138,66,.15);
+    }
 
-    .feedback-inline { font-size:14px;font-weight:700;padding:8px 18px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;margin-top:4px;opacity:0;transition:opacity 0.3s; }
-    .feedback-inline.correct { background:rgba(16,140,90,0.15);color:#0a6e3f;opacity:1; }
-    .feedback-inline.faux    { background:rgba(200,50,50,0.12);color:#a83232;opacity:1; }
+    .feedback-inline {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      letter-spacing: -.05px;
+    }
+    .feedback-inline.correct {
+      background: var(--green-l);
+      color: var(--green-dark);
+      opacity: 1;
+    }
+    .feedback-inline.faux {
+      background: var(--red-l);
+      color: var(--red-dark);
+      opacity: 1;
+    }
 
-    /* ── QUIZ FINAL ── */
-    .quiz-carte { background:rgba(255,255,255,0.62);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.85);border-radius:28px;padding:40px 48px 44px;display:flex;flex-direction:column;align-items:center;gap:20px;max-width:580px;width:92%; }
-    .prog-wrap { width:100%; }
-    .prog-label { font-size:12px;font-weight:700;color:var(--vert-bord);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;text-align:center; }
-    .prog-track { width:100%;height:6px;background:rgba(10,110,63,0.12);border-radius:999px;overflow:hidden; }
-    .prog-fill  { height:100%;background:var(--vert-fort);border-radius:999px;transition:width 0.5s cubic-bezier(.22,1,.36,1);width:0%; }
-    .consigne { font-size:19px;font-weight:500;color:var(--texte-fonce);text-align:center;line-height:1.7; }
-    .consigne .mot-cle { color:var(--vert-bord);font-weight:700; }
-    .feedback { font-size:15px;font-weight:700;padding:10px 24px;border-radius:12px;min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;opacity:0;transition:opacity 0.3s;text-align:center; }
-    .feedback.correct { background:rgba(16,140,90,0.15);color:var(--vert-bord);opacity:1; }
-    .feedback.faux    { background:rgba(200,50,50,0.12);color:#a83232;opacity:1; }
+    /* ══ QUIZ FINAL ════════════════════════════════════════════ */
+    .quiz-carte {
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.85);
+      border-radius: var(--rxl);
+      padding: 40px 48px 44px;
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 580px; width: 92%;
+      box-shadow: 0 8px 32px rgba(20,19,16,.06);
+    }
+    .prog-wrap { width: 100%; }
+    .prog-label {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .prog-track {
+      width: 100%; height: 6px;
+      background: rgba(20,19,16,.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-l), var(--gold-deep));
+      border-radius: 999px;
+      transition: width 0.5s cubic-bezier(.22,1,.36,1);
+      width: 0%;
+    }
+    .consigne {
+      font-family: 'Sora', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      text-align: center;
+      line-height: 1.55;
+      letter-spacing: -.2px;
+    }
+    .consigne .mot-cle {
+      color: var(--gold-deep);
+      font-weight: 700;
+    }
+    .feedback {
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 12px;
+      min-height: 40px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      text-align: center;
+      letter-spacing: -.05px;
+    }
+    .feedback.correct {
+      background: var(--green-l);
+      color: var(--green-dark);
+      opacity: 1;
+    }
+    .feedback.faux {
+      background: var(--red-l);
+      color: var(--red-dark);
+      opacity: 1;
+    }
 
     /* Fractions dans le quiz final */
-    .fractions-quiz { display:flex;align-items:center;gap:24px;justify-content:center;flex-wrap:wrap;margin:4px 0; }
-    .frac-q { display:inline-flex;flex-direction:column;align-items:center;gap:4px; }
-    .frac-q .fq-n { font-size:44px;font-weight:700;color:var(--texte-fonce);line-height:1; }
-    .frac-q .fq-b { width:56px;height:3px;background:var(--texte-fonce);border-radius:2px; }
-    .frac-sep-v { font-size:22px;font-weight:700;color:var(--vert-bord); }
-    .oui-non-wrap { display:flex;gap:16px;justify-content:center;width:100%; }
-    .oui-non-btn { padding:14px 40px;border-radius:16px;border:2px solid rgba(10,110,63,0.25);background:rgba(255,255,255,0.6);font-size:18px;font-weight:700;color:var(--texte-fonce);cursor:pointer;transition:background 0.18s,border-color 0.18s,transform 0.15s;font-family:inherit; }
-    .oui-non-btn:hover { background:rgba(16,140,90,0.1);border-color:var(--vert-fort);transform:scale(1.05); }
+    .fractions-quiz {
+      display: flex; align-items: center;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 4px 0;
+    }
+    .frac-q {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Sora', sans-serif;
+    }
+    .frac-q .fq-n {
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1;
+      letter-spacing: -.5px;
+    }
+    .frac-q .fq-b {
+      width: 56px;
+      height: 3px;
+      background: var(--navy);
+      border-radius: 2px;
+    }
+    .frac-sep-v {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--gold-deep);
+      letter-spacing: -.2px;
+    }
+    .oui-non-wrap {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      width: 100%;
+    }
+    .oui-non-btn {
+      font-family: 'Inter Tight', sans-serif;
+      padding: 13px 38px;
+      border-radius: var(--r);
+      border: 1.5px solid var(--border);
+      background: rgba(255,255,255,.7);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+      transition: background .18s, border-color .18s, transform .15s, box-shadow .2s;
+      letter-spacing: -.05px;
+    }
+    .oui-non-btn:hover {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(194,138,66,.15);
+    }
   </style>
 </head>
 <body>
@@ -165,36 +652,36 @@
       <div class="regle-bloc" style="margin-bottom:0;">
         <div class="regle-label">La règle</div>
         <div class="regle-texte">
-          Deux fractions sont <strong style="color:#d4820a;">égales</strong> si on passe de l'une à l'autre en <strong>multipliant ou divisant</strong> le numérateur <strong>ET</strong> le dénominateur par le <strong style="color:#d4820a;">même nombre</strong>.
+          Deux fractions sont <strong style="color:#C28A42;">égales</strong> si on passe de l'une à l'autre en <strong>multipliant ou divisant</strong> le numérateur <strong>ET</strong> le dénominateur par le <strong style="color:#C28A42;">même nombre</strong>.
         </div>
       </div>
-      <div style="width:100%;background:rgba(212,130,10,0.06);border-radius:14px;padding:20px 24px;margin-top:20px;">
-        <div style="font-size:11px;font-weight:700;color:#b06a20;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">Exemple</div>
+      <div style="width:100%;background:rgba(194,138,66,0.06);border-radius:14px;padding:20px 24px;margin-top:20px;">
+        <div style="font-size:11px;font-weight:700;color:#B47A35;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">Exemple</div>
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;">
           <div style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;">
-            <span style="font-size:36px;font-weight:700;color:#d4820a;line-height:1;">2</span>
-            <div style="width:50px;height:3px;background:#d4820a;border-radius:2px;"></div>
-            <span style="font-size:36px;font-weight:700;color:#d4820a;line-height:1;">3</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">2</span>
+            <div style="width:50px;height:3px;background:#C28A42;border-radius:2px;"></div>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">3</span>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-            <span style="font-size:12px;font-weight:700;color:#b06a20;">× 2</span>
-            <span style="font-size:20px;color:#b06a20;">→</span>
-            <span style="font-size:12px;font-weight:700;color:#b06a20;">× 2</span>
+            <span style="font-size:12px;font-weight:700;color:#B47A35;">× 2</span>
+            <span style="font-size:20px;color:#B47A35;">→</span>
+            <span style="font-size:12px;font-weight:700;color:#B47A35;">× 2</span>
           </div>
           <div style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;">
-            <span style="font-size:36px;font-weight:700;color:#d4820a;line-height:1;">4</span>
-            <div style="width:50px;height:3px;background:#d4820a;border-radius:2px;"></div>
-            <span style="font-size:36px;font-weight:700;color:#d4820a;line-height:1;">6</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">4</span>
+            <div style="width:50px;height:3px;background:#C28A42;border-radius:2px;"></div>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">6</span>
           </div>
-          <div style="font-size:15px;font-weight:700;color:#0a6e3f;">→ égales ✓</div>
+          <div style="font-size:15px;font-weight:700;color:#0E7348;">→ égales ✓</div>
         </div>
-        <div style="margin-top:16px;font-size:14px;color:#5a3a00;line-height:1.6;text-align:center;">
-          On a multiplié <strong>2 et 3</strong> par le même nombre (<strong style="color:#d4820a;">2</strong>).<br>
+        <div style="margin-top:16px;font-size:14px;color:#4A4036;line-height:1.6;text-align:center;">
+          On a multiplié <strong>2 et 3</strong> par le même nombre (<strong style="color:#C28A42;">2</strong>).<br>
           Numérateur et dénominateur ont bougé <strong>pareil</strong> → fractions égales.
         </div>
       </div>
       <div style="width:100%;display:flex;justify-content:center;margin-top:28px;">
-        <button onclick="versExercices()" style="padding:13px 48px;border-radius:999px;border:2.5px solid #d4820a;background:transparent;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.04em;color:#d4820a;transition:background 0.2s,color 0.2s,transform 0.15s;font-family:inherit;" onmouseover="this.style.background='#d4820a';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#d4820a'">Compris !</button>
+        <button onclick="versExercices()" style="padding:13px 48px;border-radius:999px;border:2.5px solid #C28A42;background:transparent;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.04em;color:#C28A42;transition:background 0.2s,color 0.2s,transform 0.15s;font-family:inherit;" onmouseover="this.style.background='#C28A42';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#C28A42'">Compris !</button>
       </div>
     </div>
   </div>
@@ -260,7 +747,7 @@
   <!-- ÉCRAN 5A : RÉUSSI -->
   <div class="ecran fond-vert cache" id="ecran-final-ok">
     <div class="carte anime">
-      <div class="badge" style="background:rgba(16,140,90,0.15);color:#0a6e3f;">Notion maîtrisée ✓</div>
+      <div class="badge" style="background:rgba(21,163,98,0.13);color:#0E7348;">Notion maîtrisée ✓</div>
       <div class="titre">Bravo <span class="accent" id="prenom-final-ok"></span> ! 🎉</div>
       <div class="texte-intro" id="texte-final-ok"></div>
     </div>
@@ -269,7 +756,7 @@
   <!-- ÉCRAN 5B : À REVOIR -->
   <div class="ecran fond-vert cache" id="ecran-final-revoir">
     <div class="carte anime">
-      <div class="badge" style="background:rgba(200,50,50,0.12);color:#a83232;">À revoir</div>
+      <div class="badge" style="background:rgba(212,38,38,0.10);color:#A11717;">À revoir</div>
       <div class="titre">Pas encore <span class="accent" id="prenom-final-revoir"></span>…</div>
       <div class="texte-intro" id="texte-final-revoir"></div>
       <button class="btn" onclick="revenirCours()">Revoir le cours</button>
@@ -279,7 +766,7 @@
   <!-- ÉCRAN 5C : BLOQUÉ -->
   <div class="ecran fond-vert cache" id="ecran-bloque">
     <div class="carte anime">
-      <div class="badge" style="background:rgba(200,50,50,0.12);color:#a83232;">Aide en route 🙋</div>
+      <div class="badge" style="background:rgba(212,38,38,0.10);color:#A11717;">Aide en route 🙋</div>
       <div class="titre">Ton prof va venir<br>t'aider <span class="accent" id="prenom-bloque"></span></div>
       <div class="texte-intro">Tu as fait 3 tentatives.<br>Ton enseignant a été alerté et va passer te voir.<br><br>Pas de panique, c'est normal d'avoir besoin d'aide !</div>
     </div>
@@ -378,6 +865,18 @@
       setTimeout(() => chargerPaire(0), 500);
     }
 
+    // Surligne les éléments concernés par la question courante.
+    // cible : 'den' (dénominateurs), 'num' (numérateurs), ou null (rien)
+    function setHighlight(cible) {
+      const num1 = document.getElementById('f1-num');
+      const num2 = document.getElementById('f2-num');
+      const den1 = document.getElementById('f1-den');
+      const den2 = document.getElementById('f2-den');
+      [num1, num2, den1, den2].forEach(el => el && el.classList.remove('highlight'));
+      if (cible === 'den') { den1.classList.add('highlight'); den2.classList.add('highlight'); }
+      else if (cible === 'num') { num1.classList.add('highlight'); num2.classList.add('highlight'); }
+    }
+
     function chargerPaire(pi) {
       paireIndex = pi; etape = 0; bloqueCours = false;
       const p = PAIRES[pi];
@@ -394,6 +893,7 @@
     }
 
     function afficherQ1(p) {
+      setHighlight('den');
       const zone = document.getElementById('questions-guidees');
       const op = p.op;
       const label = op === '×' ? 'multiplié' : 'divisé';
@@ -429,6 +929,7 @@
     }
 
     function afficherQ2() {
+      setHighlight('num');
       const p = PAIRES[paireIndex];
       const zone = document.getElementById('questions-guidees');
       const op = p.op;
@@ -465,6 +966,7 @@
     }
 
     function afficherQ3() {
+      setHighlight(null);
       const p = PAIRES[paireIndex];
       const zone = document.getElementById('questions-guidees');
 
@@ -556,7 +1058,7 @@
       if (scoreFinal >= 80) {
         sauvegarder('quiz_final_valide', scoreFinal, nbTentativesFinales);
         document.getElementById('texte-final-ok').innerHTML =
-          'Tu as eu <strong style="color:var(--vert-bord);">' + bonnesRepFinal + ' / ' + PAIRES.length + '</strong> bonnes réponses.<br>Tu sais reconnaître deux fractions égales ! 🎉';
+          'Tu as eu <strong style="color:var(--green-dark);">' + bonnesRepFinal + ' / ' + PAIRES.length + '</strong> bonnes réponses.<br>Tu sais reconnaître deux fractions égales ! 🎉';
         allerVers('ecran-quiz-final','ecran-final-ok');
       } else if (nbTentativesFinales >= MAX_TENTATIVES) {
         sauvegarder('echec_3_tentatives', scoreFinal, nbTentativesFinales, { prof_email:profEmail });
