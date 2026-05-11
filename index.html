@@ -11,7 +11,6 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      /* ── Palette écosystème ── */
       --navy: #1A2C4F;
       --navy-deep: #142340;
       --gold: #C28A42;
@@ -75,6 +74,10 @@
       0%   { box-shadow: 0 0 0 0 rgba(194,138,66,0); }
       50%  { box-shadow: 0 6px 20px rgba(194,138,66,.30), 0 0 0 0 rgba(194,138,66,.10); }
       100% { box-shadow: 0 0 0 0 rgba(194,138,66,0); }
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(194,138,66,0.45); }
+      50%     { box-shadow: 0 0 0 10px rgba(194,138,66,0); }
     }
     @keyframes regleFadeIn {
       from { opacity: 0; transform: translateY(10px); }
@@ -142,6 +145,80 @@
       border-radius: 50%;
       background: var(--gold);
     }
+
+    /* Bouton audio toggle dans le header */
+    .header-audio-toggle {
+      position: absolute; left: 20px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: rgba(255,255,255,.7);
+      font-size: 16px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+      padding: 0;
+      line-height: 1;
+    }
+    .header-audio-toggle:hover {
+      background: var(--gold-pale);
+      border-color: var(--gold);
+      transform: scale(1.05);
+    }
+    .header-audio-toggle.active {
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-deep));
+      border-color: var(--gold-deep);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(194,138,66,.30);
+    }
+    .header-audio-toggle.active.speaking {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    /* Bouton audio toggle DANS LA CARTE D'ACCUEIL */
+    .audio-toggle-card {
+      margin-top: 8px;
+      padding: 10px 22px 10px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--gold-soft);
+      background: var(--gold-pale);
+      font-family: 'Inter Tight', sans-serif;
+      font-size: 13px; font-weight: 600;
+      color: var(--gold-deep);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -.05px;
+      transition: all .2s;
+    }
+    .audio-toggle-card .ico {
+      font-size: 16px;
+      width: 24px; height: 24px;
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,.8);
+    }
+    .audio-toggle-card:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(194,138,66,.20);
+    }
+    .audio-toggle-card.active {
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-deep));
+      border-color: var(--gold-deep);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(194,138,66,.30);
+    }
+    .audio-toggle-card.active .ico {
+      background: rgba(255,255,255,.25);
+    }
+    .audio-toggle-card.active.speaking {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    body.dys .audio-toggle-card { font-family: 'OpenDyslexic', Arial, sans-serif !important; }
 
     /* ══ ÉCRANS ════════════════════════════════════════════════ */
     .ecran { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding-top: 70px; }
@@ -342,7 +419,6 @@
       background: transparent;
       transition: background 0.5s ease, box-shadow 0.5s ease;
     }
-    /* Surlignage or pulsant pour mettre en évidence num/dénom selon la question */
     @keyframes highlightPulse {
       0%   { background: rgba(212,164,100,.20); box-shadow: 0 0 0 1px rgba(194,138,66,.15); }
       50%  { background: rgba(212,164,100,.55); box-shadow: 0 0 0 2px rgba(194,138,66,.45), 0 0 14px rgba(194,138,66,.30); }
@@ -387,6 +463,49 @@
       color: var(--text);
       line-height: 1.6;
       letter-spacing: -.05px;
+    }
+
+    /* ══ Bouton "Comprendre la règle" (typewriter trigger) ══════ */
+    .demarrer-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0;
+    }
+    .btn-demarrer {
+      font-family: 'Inter Tight', sans-serif;
+      padding: 11px 26px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(180deg, var(--gold-l), var(--gold-deep));
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      letter-spacing: -.05px;
+      transition: transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(194,138,66,.25);
+    }
+    .btn-demarrer:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(194,138,66,.35);
+    }
+
+    /* ══ Effet typewriter ══════════════════════════════════════ */
+    .para-tw { min-height: 0; position: relative; }
+    .para-tw:empty { display: none; }
+    @keyframes blinkCursor {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .tw-cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--gold-deep);
+      vertical-align: text-bottom;
+      margin-left: 2px;
+      animation: blinkCursor 0.85s steps(1) infinite;
+      transform: translateY(2px);
     }
 
     /* Zone questions guidées */
@@ -440,12 +559,13 @@
       text-align: center;
       letter-spacing: -.05px;
     }
-    .choix-btn:hover {
+    .choix-btn:hover:not(:disabled) {
       background: var(--gold-pale);
       border-color: var(--gold);
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(194,138,66,.15);
     }
+    .choix-btn:disabled { cursor: default; }
 
     .feedback-inline {
       font-family: 'Inter Tight', sans-serif;
@@ -523,31 +643,6 @@
       color: var(--gold-deep);
       font-weight: 700;
     }
-    .feedback {
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      padding: 10px 24px;
-      border-radius: 12px;
-      min-height: 40px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 4px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      text-align: center;
-      letter-spacing: -.05px;
-    }
-    .feedback.correct {
-      background: var(--green-l);
-      color: var(--green-dark);
-      opacity: 1;
-    }
-    .feedback.faux {
-      background: var(--red-l);
-      color: var(--red-dark);
-      opacity: 1;
-    }
 
     /* Fractions dans le quiz final */
     .fractions-quiz {
@@ -622,6 +717,7 @@
       <span class="header-sep">·</span>
       <span class="header-nom" id="header-nom">—</span>
     </div>
+    <button class="header-audio-toggle" id="header-audio-toggle" onclick="toggleAudioMode()" title="Activer la lecture audio" aria-label="Activer la lecture audio">🔇</button>
     <div class="header-dys-badge" id="header-dys-badge">Mode DYS</div>
   </div>
 
@@ -638,6 +734,10 @@
     <div class="carte anime">
       <div class="badge">Fiche remédiation · 2</div>
       <div class="titre">Reconnaître deux<br><span class="accent">fractions égales</span></div>
+      <button class="audio-toggle-card" id="audio-toggle-card" onclick="toggleAudioMode()" aria-label="Activer la lecture audio">
+        <span class="ico">🔇</span>
+        <span class="lbl">Activer la lecture audio</span>
+      </button>
       <button class="btn" onclick="versCours()">Commencer</button>
     </div>
   </div>
@@ -652,16 +752,19 @@
       <div class="regle-bloc" style="margin-bottom:0;">
         <div class="regle-label">La règle</div>
         <div class="regle-texte">
-          Deux fractions sont <strong style="color:#C28A42;">égales</strong> si on passe de l'une à l'autre en <strong>multipliant ou divisant</strong> le numérateur <strong>ET</strong> le dénominateur par le <strong style="color:#C28A42;">même nombre</strong>.
+          <div class="demarrer-wrap" id="demarrer-wrap">
+            <button class="btn-demarrer" onclick="demarrerLecture()">Comprendre la règle ✨</button>
+          </div>
+          <div class="para-tw" id="regle-para"></div>
         </div>
       </div>
-      <div style="width:100%;background:rgba(194,138,66,0.06);border-radius:14px;padding:20px 24px;margin-top:20px;">
+      <div style="width:100%;background:rgba(194,138,66,0.06);border-radius:14px;padding:20px 24px;margin-top:20px;display:none;opacity:0;transition:opacity 0.5s ease;" id="exemple-bloc">
         <div style="font-size:11px;font-weight:700;color:#B47A35;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">Exemple</div>
         <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;">
           <div style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;">
-            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">2</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;font-family:'Sora',sans-serif;">2</span>
             <div style="width:50px;height:3px;background:#C28A42;border-radius:2px;"></div>
-            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">3</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;font-family:'Sora',sans-serif;">3</span>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
             <span style="font-size:12px;font-weight:700;color:#B47A35;">× 2</span>
@@ -669,19 +772,19 @@
             <span style="font-size:12px;font-weight:700;color:#B47A35;">× 2</span>
           </div>
           <div style="display:inline-flex;flex-direction:column;align-items:center;gap:4px;">
-            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">4</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;font-family:'Sora',sans-serif;">4</span>
             <div style="width:50px;height:3px;background:#C28A42;border-radius:2px;"></div>
-            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;">6</span>
+            <span style="font-size:36px;font-weight:700;color:#C28A42;line-height:1;font-family:'Sora',sans-serif;">6</span>
           </div>
           <div style="font-size:15px;font-weight:700;color:#0E7348;">→ égales ✓</div>
         </div>
-        <div style="margin-top:16px;font-size:14px;color:#4A4036;line-height:1.6;text-align:center;">
+        <div style="margin-top:16px;font-size:14px;color:#4A4036;line-height:1.6;text-align:center;font-family:'Inter Tight',sans-serif;">
           On a multiplié <strong>2 et 3</strong> par le même nombre (<strong style="color:#C28A42;">2</strong>).<br>
           Numérateur et dénominateur ont bougé <strong>pareil</strong> → fractions égales.
         </div>
       </div>
-      <div style="width:100%;display:flex;justify-content:center;margin-top:28px;">
-        <button onclick="versExercices()" style="padding:13px 48px;border-radius:999px;border:2.5px solid #C28A42;background:transparent;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:0.04em;color:#C28A42;transition:background 0.2s,color 0.2s,transform 0.15s;font-family:inherit;" onmouseover="this.style.background='#C28A42';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='#C28A42'">Compris !</button>
+      <div style="width:100%;display:flex;justify-content:center;margin-top:28px;display:none;opacity:0;transition:opacity 0.5s ease;" id="compris-wrap">
+        <button onclick="versExercices()" style="padding:13px 40px;border-radius:12px;border:none;background:linear-gradient(180deg,#D4A464,#B47A35);font-size:13.5px;font-weight:700;cursor:pointer;letter-spacing:-.05px;color:#fff;transition:transform 0.15s,box-shadow 0.2s;font-family:'Inter Tight',sans-serif;box-shadow:0 4px 14px rgba(194,138,66,.25);" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 8px 24px rgba(194,138,66,.35)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(194,138,66,.25)'">Compris !</button>
       </div>
     </div>
   </div>
@@ -740,7 +843,6 @@
         <button class="oui-non-btn" onclick="repondreFinal('oui')">Oui</button>
         <button class="oui-non-btn" onclick="repondreFinal('non')">Non</button>
       </div>
-      <div class="feedback" id="feedback-final"></div>
     </div>
   </div>
 
@@ -786,8 +888,6 @@
     const email     = params.get('email')      || '';
     const prof      = params.get('prof')       || '';
     const profEmail = params.get('prof_email') || '';
-    // ═══ DÉTECTION AUTOMATIQUE DU MODE DYS ═══
-    // L'espace élève transmet ?dys=1 dans l'URL si l'élève a coché "DYS" à l'inscription
     const dysActif = params.get('dys') === '1';
 
     document.getElementById('header-lycee').textContent        = lycee;
@@ -797,16 +897,176 @@
     document.getElementById('prenom-final-revoir').textContent = nom.split(' ')[0];
     document.getElementById('prenom-bloque').textContent       = nom.split(' ')[0];
 
-    // Application automatique du mode DYS au chargement
     if (dysActif) {
       document.body.classList.add('dys');
       document.getElementById('header-dys-badge').classList.add('visible');
     }
 
     let nbTentativesFinales = 0;
-    // Les timings s'adaptent au mode DYS (feedbacks plus longs pour laisser le temps de lire)
     const TOK = () => dysActif ? 1500 : 700;
     const TKO = () => dysActif ? 2000 : 1200;
+
+    // ══ MODE AUDIO GLOBAL (Web Speech API) ═══════════════════════
+    let audioMode = false;
+    let voixFr = null;
+
+    function chargerVoix() {
+      const voix = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      voixFr = voix.find(v => v.lang.startsWith('fr') && /natural|neural|premium|google|enhanced/i.test(v.name))
+            || voix.find(v => v.lang === 'fr-FR')
+            || voix.find(v => v.lang.startsWith('fr'))
+            || null;
+    }
+    if (window.speechSynthesis) {
+      chargerVoix();
+      window.speechSynthesis.onvoiceschanged = chargerVoix;
+    }
+
+    function nettoyerPourTTS(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      return (tmp.textContent || tmp.innerText || '').trim();
+    }
+
+    function parler(html, options) {
+      options = options || {};
+      if (!window.speechSynthesis) return;
+      if (!audioMode && !options.force) return;
+      window.speechSynthesis.cancel();
+      const texte = nettoyerPourTTS(html);
+      if (!texte) return;
+      const utt = new SpeechSynthesisUtterance(texte);
+      utt.lang = 'fr-FR';
+      utt.rate = 0.92; utt.pitch = 1.0; utt.volume = 1.0;
+      if (voixFr) utt.voice = voixFr;
+      const headerBtn = document.getElementById('header-audio-toggle');
+      const cardBtn = document.getElementById('audio-toggle-card');
+      if (audioMode) {
+        if (headerBtn) headerBtn.classList.add('speaking');
+        if (cardBtn) cardBtn.classList.add('speaking');
+      }
+      utt.onend = () => {
+        if (headerBtn) headerBtn.classList.remove('speaking');
+        if (cardBtn) cardBtn.classList.remove('speaking');
+        if (options.onEnd) options.onEnd();
+      };
+      utt.onerror = () => {
+        if (headerBtn) headerBtn.classList.remove('speaking');
+        if (cardBtn) cardBtn.classList.remove('speaking');
+        if (options.onEnd) options.onEnd();
+      };
+      window.speechSynthesis.speak(utt);
+    }
+
+    function arreterLecture() {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      const headerBtn = document.getElementById('header-audio-toggle');
+      const cardBtn = document.getElementById('audio-toggle-card');
+      if (headerBtn) headerBtn.classList.remove('speaking');
+      if (cardBtn) cardBtn.classList.remove('speaking');
+    }
+
+    function toggleAudioMode() {
+      audioMode = !audioMode;
+      const headerBtn = document.getElementById('header-audio-toggle');
+      const cardBtn = document.getElementById('audio-toggle-card');
+      if (audioMode) {
+        if (headerBtn) {
+          headerBtn.classList.add('active');
+          headerBtn.textContent = '🔊';
+          headerBtn.title = 'Désactiver la lecture audio';
+          headerBtn.setAttribute('aria-label', 'Désactiver la lecture audio');
+        }
+        if (cardBtn) {
+          cardBtn.classList.add('active');
+          cardBtn.querySelector('.ico').textContent = '🔊';
+          cardBtn.querySelector('.lbl').textContent = 'Audio activé — clique pour désactiver';
+          cardBtn.setAttribute('aria-label', 'Désactiver la lecture audio');
+        }
+      } else {
+        if (headerBtn) {
+          headerBtn.classList.remove('active', 'speaking');
+          headerBtn.textContent = '🔇';
+          headerBtn.title = 'Activer la lecture audio';
+          headerBtn.setAttribute('aria-label', 'Activer la lecture audio');
+        }
+        if (cardBtn) {
+          cardBtn.classList.remove('active', 'speaking');
+          cardBtn.querySelector('.ico').textContent = '🔇';
+          cardBtn.querySelector('.lbl').textContent = 'Activer la lecture audio';
+          cardBtn.setAttribute('aria-label', 'Activer la lecture audio');
+        }
+        arreterLecture();
+      }
+    }
+
+    // ══ TYPEWRITER POUR LA RÈGLE ═════════════════════════════════
+    const REGLE_TEXTE = 'Deux fractions sont <strong style="color:#C28A42;">égales</strong> si on passe de l\'une à l\'autre en <strong>multipliant ou divisant</strong> le numérateur <strong>ET</strong> le dénominateur par le <strong style="color:#C28A42;">même nombre</strong>.';
+    let twTimer = null;
+
+    function typewriter(elementId, html, charDelay, onDone) {
+      const el = document.getElementById(elementId);
+      el.innerHTML = '';
+      const tokens = [];
+      let i = 0;
+      while (i < html.length) {
+        if (html[i] === '<') {
+          const fin = html.indexOf('>', i);
+          if (fin === -1) { tokens.push(html[i]); i++; continue; }
+          tokens.push(html.substring(i, fin + 1));
+          i = fin + 1;
+        } else {
+          tokens.push(html[i]);
+          i++;
+        }
+      }
+      el.innerHTML = '<span class="tw-text"></span><span class="tw-cursor"></span>';
+      const txtSpan = el.querySelector('.tw-text');
+      let written = '';
+      let idx = 0;
+      function step() {
+        if (idx >= tokens.length) {
+          const cur = el.querySelector('.tw-cursor');
+          if (cur) cur.remove();
+          if (onDone) onDone();
+          return;
+        }
+        const tok = tokens[idx];
+        if (tok.startsWith('<')) {
+          written += tok; idx++;
+          txtSpan.innerHTML = written;
+          step();
+        } else {
+          written += tok; idx++;
+          txtSpan.innerHTML = written;
+          twTimer = setTimeout(step, charDelay);
+        }
+      }
+      step();
+    }
+
+    function demarrerLecture() {
+      const dem = document.getElementById('demarrer-wrap');
+      dem.style.transition = 'opacity 0.3s ease';
+      dem.style.opacity = '0';
+      parler(REGLE_TEXTE);
+      setTimeout(() => {
+        dem.style.display = 'none';
+        typewriter('regle-para', REGLE_TEXTE, 28, () => {
+          // Afficher l'exemple visuel + le bouton "Compris !"
+          const exB = document.getElementById('exemple-bloc');
+          const compW = document.getElementById('compris-wrap');
+          exB.style.display = 'block';
+          compW.style.display = 'flex';
+          // Forcer le repaint pour que la transition fonctionne
+          exB.offsetHeight;
+          setTimeout(() => {
+            exB.style.opacity = '1';
+            setTimeout(() => { compW.style.opacity = '1'; }, 250);
+          }, 50);
+        });
+      }, 300);
+    }
 
     function sauvegarder(statut, score, tentativeNum, extra) {
       if (!email) return;
@@ -837,7 +1097,6 @@
 
     // ── DONNÉES ─────────────────────────────────────────────────
 
-    // Chaque paire : f1, f2, operation ('×' ou '÷'), facteur, egales
     const PAIRES = [
       { f1:{n:1,d:2}, f2:{n:2,d:4},  op:'×', facteur:2,  egales:true  },
       { f1:{n:2,d:3}, f2:{n:4,d:6},  op:'×', facteur:2,  egales:true  },
@@ -847,17 +1106,23 @@
       { f1:{n:3,d:5}, f2:{n:9,d:20}, op:'×', facteur:4,  egales:false },
     ];
 
-    // Ordre mélangé pour le quiz final
     const ORDRE_FINAL = [1,3,5,0,4,2];
 
     // ── COURS GUIDÉ ──────────────────────────────────────────────
     let paireIndex = 0;
-    let etape = 0; // 0=Q1, 1=Q2, 2=Q3
     let bloqueCours = false;
     let repQ1 = 0;
 
     function versCours() {
       allerVers('ecran-accueil','ecran-retenir');
+      // Reset le bloc règle au cas où on y reviendrait
+      document.getElementById('demarrer-wrap').style.display = 'flex';
+      document.getElementById('demarrer-wrap').style.opacity = '1';
+      document.getElementById('regle-para').innerHTML = '';
+      document.getElementById('exemple-bloc').style.display = 'none';
+      document.getElementById('exemple-bloc').style.opacity = '0';
+      document.getElementById('compris-wrap').style.display = 'none';
+      document.getElementById('compris-wrap').style.opacity = '0';
     }
 
     function versExercices() {
@@ -865,8 +1130,6 @@
       setTimeout(() => chargerPaire(0), 500);
     }
 
-    // Surligne les éléments concernés par la question courante.
-    // cible : 'den' (dénominateurs), 'num' (numérateurs), ou null (rien)
     function setHighlight(cible) {
       const num1 = document.getElementById('f1-num');
       const num2 = document.getElementById('f2-num');
@@ -878,7 +1141,7 @@
     }
 
     function chargerPaire(pi) {
-      paireIndex = pi; etape = 0; bloqueCours = false;
+      paireIndex = pi; bloqueCours = false;
       const p = PAIRES[pi];
       document.getElementById('cours-badge').textContent = 'Paire ' + (pi+1) + ' / ' + PAIRES.length;
       document.getElementById('cours-fill').style.width  = (pi / PAIRES.length * 100) + '%';
@@ -897,12 +1160,13 @@
       const zone = document.getElementById('questions-guidees');
       const op = p.op;
       const label = op === '×' ? 'multiplié' : 'divisé';
-      const d1 = p.f1.d, d2 = p.f2.d;
 
-      // Générer 4 choix pour Q1 (dont le bon)
       const bon = p.facteur;
       const mauvais = [bon+1, bon+2, bon-1 > 0 ? bon-1 : bon+3, bon*2].filter(x => x !== bon && x > 0);
       const choix = shuffle([bon, mauvais[0], mauvais[1], mauvais[2]]);
+
+      const consigne = 'Par combien le dénominateur a-t-il été ' + label + ' ?';
+      parler(consigne);
 
       const bloc = document.createElement('div');
       bloc.className = 'question-bloc';
@@ -918,14 +1182,30 @@
 
     function repQ1Fn(choix, bon) {
       if (bloqueCours) return; bloqueCours = true;
-      repQ1 = bon; // on retient toujours le vrai facteur pour Q2
       const fb = document.getElementById('fb-q1');
       const correct = choix === bon;
-      fb.textContent = correct ? '✓ Exact !' : '✗ Non, c\'est ' + bon + '.';
-      fb.className = 'feedback-inline ' + (correct ? 'correct' : 'faux');
-      // Désactiver les boutons
-      document.querySelectorAll('#q1-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
-      setTimeout(() => { bloqueCours = false; afficherQ2(); }, TOK());
+      if (correct) {
+        repQ1 = bon;
+        fb.textContent = '✓ Exact !';
+        fb.className = 'feedback-inline correct';
+        parler('Exact !');
+        document.querySelectorAll('#q1-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+        setTimeout(() => { bloqueCours = false; afficherQ2(); }, TOK());
+      } else {
+        // On accepte la mauvaise réponse pour ce point, mais on AFFICHE le bon, et on ATTEND avant de réessayer
+        fb.textContent = '✗ Non, réessaie. Le facteur est ' + bon + '.';
+        fb.className = 'feedback-inline faux';
+        parler('Non, réessaie.');
+        // On désactive uniquement le bouton cliqué (rouge), les autres restent actifs
+        const btns = document.querySelectorAll('#q1-bloc .choix-btn');
+        btns.forEach(b => { if (parseInt(b.textContent, 10) === choix) { b.disabled = true; b.style.opacity = '0.5'; } });
+        setTimeout(() => {
+          fb.style.opacity = '0';
+          fb.className = 'feedback-inline';
+          fb.textContent = '';
+          bloqueCours = false;
+        }, TKO());
+      }
     }
 
     function afficherQ2() {
@@ -937,6 +1217,9 @@
       const n1 = p.f1.n, n2 = p.f2.n;
       const attendu = op === '×' ? n1 * repQ1 : n1 / repQ1;
       const egalite = attendu === n2;
+
+      const consigne = 'Le numérateur a-t-il lui aussi été ' + label + ' par ' + repQ1 + ' ?';
+      parler(consigne);
 
       const bloc = document.createElement('div');
       bloc.className = 'question-bloc';
@@ -957,18 +1240,36 @@
 
     function repQ2Fn(choix, correct) {
       if (bloqueCours) return; bloqueCours = true;
-      const p = PAIRES[paireIndex];
       const fb = document.getElementById('fb-q2');
-      fb.textContent = correct ? '✓ Exact !' : '✗ Regarde bien les numérateurs.';
-      fb.className = 'feedback-inline ' + (correct ? 'correct' : 'faux');
-      document.querySelectorAll('#q2-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity='0.5'; });
-      setTimeout(() => { bloqueCours = false; afficherQ3(); }, TOK());
+      if (correct) {
+        fb.textContent = '✓ Exact !';
+        fb.className = 'feedback-inline correct';
+        parler('Exact !');
+        document.querySelectorAll('#q2-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity='0.5'; });
+        setTimeout(() => { bloqueCours = false; afficherQ3(); }, TOK());
+      } else {
+        fb.textContent = '✗ Regarde bien les numérateurs.';
+        fb.className = 'feedback-inline faux';
+        parler('Regarde bien les numérateurs.');
+        // Désactive seulement le bouton cliqué
+        const btns = document.querySelectorAll('#q2-bloc .choix-btn');
+        btns.forEach(b => { if (b.textContent.toLowerCase() === choix) { b.disabled = true; b.style.opacity = '0.5'; } });
+        setTimeout(() => {
+          fb.style.opacity = '0';
+          fb.className = 'feedback-inline';
+          fb.textContent = '';
+          bloqueCours = false;
+        }, TKO());
+      }
     }
 
     function afficherQ3() {
       setHighlight(null);
       const p = PAIRES[paireIndex];
       const zone = document.getElementById('questions-guidees');
+
+      const consigne = 'Ces deux fractions sont-elles égales ?';
+      parler(consigne);
 
       const bloc = document.createElement('div');
       bloc.className = 'question-bloc';
@@ -991,25 +1292,40 @@
       if (bloqueCours) return; bloqueCours = true;
       const p = PAIRES[paireIndex];
       const fb = document.getElementById('fb-q3');
-      const rep = p.egales ? 'Oui, elles sont égales ✓' : 'Non, elles ne sont pas égales ✓';
-      fb.textContent = correct ? rep : (p.egales ? '✗ Si, elles sont bien égales.' : '✗ Non, elles ne sont pas égales.');
-      fb.className = 'feedback-inline ' + (correct ? 'correct' : 'faux');
-      document.querySelectorAll('#q3-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity='0.5'; });
-      setTimeout(() => {
-        bloqueCours = false;
-        paireIndex++;
-        if (paireIndex >= PAIRES.length) {
-          allerVers('ecran-cours','ecran-transition-final');
-        } else {
-          // Scroll haut puis charger paire suivante
-          const carte = document.querySelector('.cours-carte');
-          if (carte) carte.scrollTop = 0;
-          setTimeout(() => chargerPaire(paireIndex), 400);
-        }
-      }, TKO());
+      if (correct) {
+        const rep = p.egales ? 'Oui, elles sont égales ✓' : 'Non, elles ne sont pas égales ✓';
+        fb.textContent = rep;
+        fb.className = 'feedback-inline correct';
+        parler(rep);
+        document.querySelectorAll('#q3-bloc .choix-btn').forEach(b => { b.disabled = true; b.style.opacity='0.5'; });
+        setTimeout(() => {
+          bloqueCours = false;
+          paireIndex++;
+          if (paireIndex >= PAIRES.length) {
+            allerVers('ecran-cours','ecran-transition-final');
+          } else {
+            const carte = document.querySelector('.cours-carte');
+            if (carte) carte.scrollTop = 0;
+            setTimeout(() => chargerPaire(paireIndex), 400);
+          }
+        }, TKO());
+      } else {
+        const msg = p.egales ? '✗ Si, elles sont bien égales. Réessaie.' : '✗ Non, elles ne sont pas égales. Réessaie.';
+        fb.textContent = msg;
+        fb.className = 'feedback-inline faux';
+        parler(msg);
+        const btns = document.querySelectorAll('#q3-bloc .choix-btn');
+        btns.forEach(b => { if (b.textContent.toLowerCase() === choix) { b.disabled = true; b.style.opacity = '0.5'; } });
+        setTimeout(() => {
+          fb.style.opacity = '0';
+          fb.className = 'feedback-inline';
+          fb.textContent = '';
+          bloqueCours = false;
+        }, TKO());
+      }
     }
 
-    // ── QUIZ FINAL ───────────────────────────────────────────────
+    // ── QUIZ FINAL (tolérant aux mauvaises réponses) ─────────────
     let qFinalIndex = 0, bloqueFinal = false, bonnesRepFinal = 0;
 
     function versQuizFinal() {
@@ -1023,23 +1339,22 @@
       const p = PAIRES[ORDRE_FINAL[i]];
       document.getElementById('prog-label-final').textContent = 'Paire ' + (i+1) + ' / ' + PAIRES.length;
       document.getElementById('prog-fill-final').style.width  = (i / PAIRES.length * 100) + '%';
-      document.getElementById('feedback-final').className     = 'feedback';
-      document.getElementById('feedback-final').innerHTML     = '';
       document.getElementById('fractions-quiz-final').innerHTML = `
         <div class="frac-q"><div class="fq-n">${p.f1.n}</div><div class="fq-b"></div><div class="fq-n">${p.f1.d}</div></div>
         <div class="frac-sep-v">et</div>
         <div class="frac-q"><div class="fq-n">${p.f2.n}</div><div class="fq-b"></div><div class="fq-n">${p.f2.d}</div></div>
       `;
+      parler('Ces deux fractions sont-elles égales ?');
     }
 
+    // Quiz final tolérant : on accepte le choix sans afficher de feedback,
+    // on enregistre simplement si c'était juste ou faux, et on enchaîne.
     function repondreFinal(choix) {
       if (bloqueFinal) return; bloqueFinal = true;
       const p = PAIRES[ORDRE_FINAL[qFinalIndex]];
       const correct = (choix === 'oui') === p.egales;
       if (correct) bonnesRepFinal++;
-      const fb = document.getElementById('feedback-final');
-      fb.textContent = correct ? '✓ Bonne réponse !' : (p.egales ? '✗ Si, elles sont égales.' : '✗ Non, elles ne sont pas égales.');
-      fb.className = 'feedback ' + (correct ? 'correct' : 'faux');
+      // Pas de feedback intermédiaire — on passe directement à la suivante
       setTimeout(() => {
         qFinalIndex++;
         if (qFinalIndex >= PAIRES.length) versFinalResultat();
@@ -1048,7 +1363,7 @@
           z.style.opacity = '0'; z.style.transition = 'opacity 0.3s';
           setTimeout(() => { chargerQuestionFinale(qFinalIndex); z.style.opacity = '1'; }, 300);
         }
-      }, correct ? TOK() : TKO());
+      }, 250);
     }
 
     function versFinalResultat() {
